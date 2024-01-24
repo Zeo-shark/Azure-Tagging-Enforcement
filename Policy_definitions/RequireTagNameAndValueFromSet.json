@@ -1,0 +1,58 @@
+{
+    "properties": {
+      "displayName": "RequireTagNameAndValueFromSet",
+      "policyType": "Custom",
+      "mode": "Indexed",
+      "description": "RequireTagNameAndValueFromSet.json",
+      "metadata": {
+        "category": "Tags",
+        "createdBy": "51180863-7821-4a55-a71d-88cf4dde3982",
+        "createdOn": "2024-01-18T05:01:18.8781572Z",
+        "updatedBy": null,
+        "updatedOn": null
+      },
+      "parameters": {
+        "tagName": {
+          "type": "String",
+          "metadata": {
+            "displayName": "Tag Name",
+            "description": "Name of the tag, such as 'environment'"
+          }
+        },
+        "tagValue": {
+          "type": "Array",
+          "metadata": {
+            "displayName": "Tag Value",
+            "description": "Value of the tag, such as 'production'"
+          },
+          "allowedValues": [
+            "12345",
+            "54321",
+            "32145"
+          ]
+        }
+      },
+      "policyRule": {
+        "if": {
+          "not": {
+            "field": "[concat('tags[', parameters('tagName'), ']')]",
+            "in": "[parameters('tagValue')]"
+          }
+        },
+        "then": {
+          "effect": "deny"
+        }
+      }
+    },
+    "id": "/subscriptions/e7628fe0-6302-4eec-89c0-1572ac743a64/providers/Microsoft.Authorization/policyDefinitions/74c1e244-bf09-48ad-9136-42bed1ff0df5",
+    "type": "Microsoft.Authorization/policyDefinitions",
+    "name": "74c1e244-bf09-48ad-9136-42bed1ff0df5",
+    "systemData": {
+      "createdBy": "admin@MngEnvMCAP924545.onmicrosoft.com",
+      "createdByType": "User",
+      "createdAt": "2024-01-18T05:01:18.8353029Z",
+      "lastModifiedBy": "admin@MngEnvMCAP924545.onmicrosoft.com",
+      "lastModifiedByType": "User",
+      "lastModifiedAt": "2024-01-18T05:01:18.8353029Z"
+    }
+  }

@@ -1,0 +1,85 @@
+{
+  "properties": {
+    "displayName": "Require a tag on resources",
+    "policyType": "BuiltIn",
+    "mode": "Indexed",
+    "description": "Enforces existence of a tag. Does not apply to resource groups.",
+    "metadata": {
+      "version": "1.0.1",
+      "category": "Tags"
+    },
+    "parameters": {
+      "tagName": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Tag Name",
+          "description": "Name of the tag, such as 'environment'"
+        }
+      }
+    },
+    "policyRule": {
+      "if": {
+        "field": "[concat('tags[', parameters('tagName'), ']')]",
+        "exists": "false"
+      },
+      "then": {
+        "effect": "deny"
+      }
+    }
+  },
+  "id": "/providers/Microsoft.Authorization/policyDefinitions/871b6d14-10aa-478d-b590-94f262ecfa99",
+  "type": "Microsoft.Authorization/policyDefinitions",
+  "name": "871b6d14-10aa-478d-b590-94f262ecfa99"
+}
+
+-----------------------------------------
+
+
+{
+  "properties": {
+    "displayName": "Require multiple tags on resources",
+    "policyType": "BuiltIn",
+    "mode": "Indexed",
+    "description": "Enforces existence of multiple tags on resources.",
+    "metadata": {
+      "version": "1.0.1",
+      "category": "Tags"
+    },
+    "parameters": {
+      "tagName1": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Tag Name 1",
+          "description": "Name of the first tag, such as 'environment'"
+        }
+      },
+      "tagName2": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Tag Name 2",
+          "description": "Name of the second tag, such as 'costCenter'"
+        }
+      }
+    },
+    "policyRule": {
+      "if": {
+        "allOf": [
+          {
+            "field": "[concat('tags[', parameters('tagName1'), ']')]",
+            "exists": "false"
+          },
+          {
+            "field": "[concat('tags[', parameters('tagName2'), ']')]",
+            "exists": "false"
+          }
+        ]
+      },
+      "then": {
+        "effect": "deny"
+      }
+    }
+  },
+  "id": "/providers/Microsoft.Authorization/policyDefinitions/12345678-1234-1234-1234-123456789012",
+  "type": "Microsoft.Authorization/policyDefinitions",
+  "name": "12345678-1234-1234-1234-123456789012"
+}

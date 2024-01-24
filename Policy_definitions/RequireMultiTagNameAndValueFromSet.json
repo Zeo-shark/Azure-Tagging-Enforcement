@@ -1,0 +1,64 @@
+{
+    "mode": "Indexed",
+    "policyRule": {
+        "if": {
+            "allOf": [
+                {
+                    "not": {
+                        "field": "[concat('tags[', parameters('tagName1'), ']')]",
+                        "in": "[parameters('tagValue1')]"
+                    }
+                },
+                {
+                    "not": {
+                        "field": "[concat('tags[', parameters('tagName2'), ']')]",
+                        "in": "[parameters('tagValue2')]"
+                    }
+                }
+            ]
+        },
+        "then": {
+            "effect": "deny"
+        }
+    },
+    "parameters": {
+        "tagName1": {
+            "type": "String",
+            "metadata": {
+                "displayName": "Tag Name 1",
+                "description": "Name of the first tag, such as 'environment'"
+            }
+        },
+        "tagValue1": {
+            "type": "Array",
+            "metadata": {
+                "displayName": "Tag Value 1",
+                "description": "Value of the first tag, such as 'production'"
+            },
+            "allowedValues": [
+                "Dev",
+                "Test",
+                "Prod"
+            ]
+        },
+        "tagName2": {
+            "type": "String",
+            "metadata": {
+                "displayName": "Tag Name 2",
+                "description": "Name of the second tag, such as 'region'"
+            }
+        },
+        "tagValue2": {
+            "type": "Array",
+            "metadata": {
+                "displayName": "Tag Value 2",
+                "description": "Value of the second tag, such as 'eastus'"
+            },
+            "allowedValues": [
+                "54321",
+                "12345",
+                "32145"
+            ]
+        }
+    }
+}
