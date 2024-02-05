@@ -1,17 +1,26 @@
-Import-Csv -Path azureresources.csv | ForEach-Object {
-    # Convert the tags value from Json to a custom object
-    $tags = $_.Tags | ConvertFrom-Json
-    # Check if the tags value is not null
-    if ($tags -ne $null) {
-        # Create an empty hashtable
-        $hashtable = @{}
-        # Loop through the properties of the custom object and add them to the hashtable
-        $tags.psobject.properties | ForEach-Object {
-            $hashtable[$_.Name] = $_.Value
+# Import the CSV file
+$csv = Import-Csv -Path "azureresourcescolumns.csv" 
+
+# Loop through each row of the CSV file
+foreach ($row in $csv) {
+    # Create an empty hashtable
+    $hashtable = @{} 
+
+    # Loop through each property of the row
+    foreach ($property in $row.psobject.properties) {
+      # Check if the property name ends with 'tag'
+      if ($property.Name -like '*tag') {
+        # Add the property name and value to the hashtable
+        if ($property.Value -ne "-" -and $property.Value -ne "") {
+          # Test the regex pattern against the string
+          if ($property.Name -match "\((.*)\)"){
+          $hashtable[$matches[1]] = $property.Value
+          }
         }
-        "Setting tags values for the $_ and $hashtable" 
-        # Set the resource group with the hashtable as the tag parameter
-        Set-AzContext -Subscription $_.SubscriptionName
-        Set-AzResourceGroup -Id $_.ResourceId -Tag $hashtable 
+      }
     }
-}
+  
+    # Print the hashtable
+    Set-AzContext -Subscription ($row.SubscriptionName -split " ")[0]
+    Set-AzResourceGroup -Name $row.Name -Tag $hashtable 
+  }
