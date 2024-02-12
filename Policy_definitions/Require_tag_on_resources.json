@@ -26,7 +26,7 @@
     },
     "policyRule": {
       "if": {
-        "allOf": [
+        "anyOf": [
           {
             "field": "[concat('tags[', parameters('tagName1'), ']')]",
             "exists": "false"

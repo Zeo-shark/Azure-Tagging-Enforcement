@@ -2,7 +2,7 @@
     "mode": "Indexed",
     "policyRule": {
         "if": {
-            "allOf": [
+            "anyOf": [
                 {
                     "not": {
                         "field": "[concat('tags[', parameters('tagName1'), ']')]",
